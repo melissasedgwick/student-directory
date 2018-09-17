@@ -1,5 +1,7 @@
 def input_students
-  puts "Please enter the names of the students"
+  puts "What cohort would you like to enter students for?"
+  cohort = gets.chomp
+  puts "Please enter the names of the students you'd like to enter for the #{cohort} cohort."
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
@@ -8,7 +10,7 @@ def input_students
   # whie the name is not empty, repeat this cdoe
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, cohort: :november}
+    students << {name: name, cohort: cohort.to_sym}
     puts "Now we have #{students.count} students"
     # get another name from the user
     name = gets.chomp
