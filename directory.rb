@@ -1,18 +1,25 @@
 def input_students
-  puts "What cohort would you like to enter students for?"
-  cohort = gets.chomp
-  puts "Please enter the names of the students you'd like to enter for the #{cohort} cohort."
+  puts "Please enter the names of the students you'd like to enter"
   puts "To finish, just hit return twice"
-  # create an empty array
   students = []
-  # get the first name
   name = gets.chomp
-  # while the name is not empty, repeat this code
   while !name.empty? do
-    # add the student hash to the array
-    students << {name: name, cohort: cohort.to_sym}
+    puts "Which cohort does #{name} belong to?"
+    cohort = gets.chomp
+    puts "What is #{name}'s hobby?"
+    hobby = gets.chomp
+    puts "What is #{name}'s height (in metres)?"
+    height = gets.chomp
+    puts "What is #{name}'s date of birth (in format DD/MM/YYYY)?"
+    dob = gets.chomp
+    students << {name: name,
+      cohort: cohort.to_sym,
+      hobby: hobby.to_sym,
+      height: height.to_sym,
+      DOB: dob.to_sym
+    }
     puts "Now we have #{students.count} students"
-    # get another name from the user
+    puts "What is the next student's name?"
     name = gets.chomp
   end
   # return the array of students
@@ -24,10 +31,9 @@ def print_header
   puts "-------------"
 end
 def print(students)
-  i = 0
-  while i < students.length do
-    puts "#{students[i][:name]} (#{students[i][:cohort]} cohort)"
-    i += 1
+  students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    puts "  is #{student[:height]}m tall, was born #{student[:DOB]} and likes #{student[:hobby]}"
   end
 end
 def print_footer(students)
