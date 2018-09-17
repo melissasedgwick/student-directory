@@ -1,10 +1,27 @@
 def input_students
+  possible_cohorts = ["January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+]
   puts "Please enter the name of the first student you'd like to enter"
   students = []
   name = gets.chomp
   while !name.empty? do
     puts "Which cohort does #{name} belong to?"
-    cohort = gets.chomp
+    cohort = gets.chomp.capitalize
+    while possible_cohorts.include?(cohort) == false
+      puts "Please enter a correct cohort."
+      cohort = gets.chomp.capitalize
+    end
     puts "What is #{name}'s hobby?"
     hobby = gets.chomp
     puts "What is #{name}'s height (in metres)?"
