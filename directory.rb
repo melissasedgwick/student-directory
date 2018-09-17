@@ -34,7 +34,11 @@ def input_students
       height: height.to_sym,
       DOB: dob.to_sym
     }
-    puts "Now we have #{students.count} students"
+    if students.count == 1
+      puts "Now we have #{students.count} student"
+    else
+      puts "Now we have #{students.count} students"
+    end
     puts "What is the next student's name?(If none, hit return)"
     name = gets.chomp
   end
@@ -65,7 +69,11 @@ def print_by_cohort(students)
 end
 def print_footer(students)
   puts "-------------".center(100)
-  puts "Overall, we have #{students.count} great students.".center(100)
+  if students.count == 1
+    puts "Overall, we have #{students.count} great student.".center(100)
+  else
+    puts "Overall, we have #{students.count} great students.".center(100)
+  end
 end
 
 students = input_students
