@@ -1,5 +1,5 @@
 def input_students
-  possible_cohorts = ["January",
+  @possible_cohorts = ["January",
   "February",
   "March",
   "April",
@@ -18,7 +18,7 @@ def input_students
   while !name.empty? do
     puts "Which cohort does #{name} belong to?"
     cohort = gets.chomp.capitalize
-    while possible_cohorts.include?(cohort) == false
+    while @possible_cohorts.include?(cohort) == false
       puts "Please enter a correct cohort."
       cohort = gets.chomp.capitalize
     end
@@ -51,6 +51,18 @@ def print(students)
     puts "is #{student[:height]}m tall, was born #{student[:DOB]} and likes #{student[:hobby]}".center(100)
   end
 end
+def print_by_cohort(students)
+  @possible_cohorts.each do |month|
+    if students.any? { |student| student[:cohort] == month.to_sym }
+      puts "#{month}:".center(100)
+    end
+    students.each do |student|
+      if student[:cohort] == month.to_sym
+        puts student[:name].center(100)
+      end
+    end
+  end
+end
 def print_footer(students)
   puts "-------------".center(100)
   puts "Overall, we have #{students.count} great students.".center(100)
@@ -58,5 +70,5 @@ end
 
 students = input_students
 print_header
-print(students)
+print_by_cohort(students)
 print_footer(students)
