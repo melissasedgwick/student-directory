@@ -14,7 +14,8 @@ def input_students
 ]
   puts "Please enter the name of the first student you'd like to enter"
   students = []
-  name = gets.chomp
+  name = gets
+  name.tr!("\n", "")
   while !name.empty? do
     puts "Which cohort does #{name} belong to?"
     cohort = gets.chomp.capitalize
