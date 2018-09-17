@@ -23,9 +23,11 @@ def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
-def print(students)
+def print(students, letter)
   students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name][0] == letter
+      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 def print_footer(students)
@@ -33,6 +35,8 @@ def print_footer(students)
 end
 
 students = input_students
+puts "Only show students whose name begins with...?"
+letter = gets.chomp
 print_header
-print(students)
+print(students, letter)
 print_footer(students)
