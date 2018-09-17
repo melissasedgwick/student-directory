@@ -20,14 +20,14 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy with names shorter than 12 characters"
+  puts "The students of Villains Academy"
   puts "-------------"
 end
 def print(students)
-  students.each do |student|
-    if student[:name].length < 12
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
-    end
+  i = 0
+  while i < students.length do
+    puts "#{students[i][:name]} (#{students[i][:cohort]} cohort)"
+    i += 1
   end
 end
 def print_footer(students)
