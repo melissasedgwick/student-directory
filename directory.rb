@@ -7,7 +7,7 @@ def input_students
   students = []
   # get the first name
   name = gets.chomp
-  # whie the name is not empty, repeat this cdoe
+  # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, cohort: cohort.to_sym}
@@ -20,13 +20,13 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy"
+  puts "The students of Villains Academy with names shorter than 12 characters"
   puts "-------------"
 end
-def print(students, letter)
-  students.each_with_index do |student, index|
-    if student[:name][0] == letter
-      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+def print(students)
+  students.each do |student|
+    if student[:name].length < 12
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
     end
   end
 end
@@ -35,8 +35,6 @@ def print_footer(students)
 end
 
 students = input_students
-puts "Only show students whose name begins with...?"
-letter = gets.chomp
 print_header
-print(students, letter)
+print(students)
 print_footer(students)
