@@ -1,6 +1,5 @@
 def input_students
-  puts "Please enter the names of the students you'd like to enter"
-  puts "To finish, just hit return twice"
+  puts "Please enter the name of the first student you'd like to enter"
   students = []
   name = gets.chomp
   while !name.empty? do
@@ -19,25 +18,25 @@ def input_students
       DOB: dob.to_sym
     }
     puts "Now we have #{students.count} students"
-    puts "What is the next student's name?"
+    puts "What is the next student's name?(If none, hit return)"
     name = gets.chomp
   end
-  # return the array of students
   students
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(100)
+  puts "-------------".center(100)
 end
 def print(students)
   students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
-    puts "  is #{student[:height]}m tall, was born #{student[:DOB]} and likes #{student[:hobby]}"
+    puts "#{student[:name]} (#{student[:cohort]} cohort)".center(100)
+    puts "is #{student[:height]}m tall, was born #{student[:DOB]} and likes #{student[:hobby]}".center(100)
   end
 end
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students."
+  puts "-------------".center(100)
+  puts "Overall, we have #{students.count} great students.".center(100)
 end
 
 students = input_students
