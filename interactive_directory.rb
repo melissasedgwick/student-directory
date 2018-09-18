@@ -55,18 +55,13 @@ def input_students
       puts "Please enter a correct cohort."
       cohort = STDIN.gets.chomp.capitalize
     end
-    puts "What is #{name}'s hobby?"
-    hobby = STDIN.gets.chomp
-    puts "What is #{name}'s height (in metres)?"
-    height = STDIN.gets.chomp
-    puts "What is #{name}'s date of birth (in format DD/MM/YYYY)?"
-    dob = STDIN.gets.chomp
-    @students << {name: name,
-      cohort: cohort.to_sym,
-      hobby: hobby.to_sym,
-      height: height.to_sym,
-      DOB: dob.to_sym
-    }
+  #  puts "What is #{name}'s hobby?"
+  #  hobby = STDIN.gets.chomp
+  #  puts "What is #{name}'s height (in metres)?"
+  #  height = STDIN.gets.chomp
+  #  puts "What is #{name}'s date of birth (in format DD/MM/YYYY)?"
+  #  dob = STDIN.gets.chomp
+    add_to_students(name, cohort)
     if @students.count == 1
       puts "Now we have #{@students.count} student"
     else
@@ -92,7 +87,7 @@ end
 def print_students_list
   @students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)".center(100)
-    puts "is #{student[:height]}m tall, was born #{student[:DOB]} and likes #{student[:hobby]}".center(100)
+  #  puts "is #{student[:height]}m tall, was born #{student[:DOB]} and likes #{student[:hobby]}".center(100)
   end
 end
 
@@ -132,7 +127,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
-      @students << {name: name, cohort: cohort.to_sym}
+      add_to_students(name, cohort)
   end
   file.close
 end
@@ -147,6 +142,10 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit
   end
+end
+
+def add_to_students(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
 end
 
 try_load_students
