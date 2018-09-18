@@ -1,22 +1,35 @@
 @students = []
 
-def save_students
-  file = File.open("students.csv", "w")
-  @students.each do |student|
-    student_data = [student[:name], student [:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
+  puts "9. Exit"
 end
 
-def load_students
-  file = File.open("students.csv", "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-      @students << {name: name, cohort: cohort.to_sym}
+def interactive_menu
+  loop do
+    print_menu
+    process(STDIN.gets.chomp)
   end
-  file.close
+end
+
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "3"
+      save_students
+    when "4"
+      load_students
+    when "9"
+      exit
+    else
+      puts "I don't know what you meant, try again"
+  end
 end
 
 def input_students
@@ -34,20 +47,20 @@ def input_students
   "December"
 ]
   puts "Please enter the name of the first student you'd like to enter"
-  name = gets.chomp
+  name = STDIN.gets.chomp
   while !name.empty? do
     puts "Which cohort does #{name} belong to?"
-    cohort = gets.chomp.capitalize
+    cohort = STDIN.gets.chomp.capitalize
     while @possible_cohorts.include?(cohort) == false
       puts "Please enter a correct cohort."
-      cohort = gets.chomp.capitalize
+      cohort = STDIN.gets.chomp.capitalize
     end
     puts "What is #{name}'s hobby?"
-    hobby = gets.chomp
+    hobby = STDIN.gets.chomp
     puts "What is #{name}'s height (in metres)?"
-    height = gets.chomp
+    height = STDIN.gets.chomp
     puts "What is #{name}'s date of birth (in format DD/MM/YYYY)?"
-    dob = gets.chomp
+    dob = STDIN.gets.chomp
     @students << {name: name,
       cohort: cohort.to_sym,
       hobby: hobby.to_sym,
@@ -63,6 +76,12 @@ def input_students
     name = gets.chomp
   end
   @students
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
 end
 
 def print_header
@@ -99,42 +118,36 @@ def print_footer
   end
 end
 
-def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
-  puts "9. Exit"
+def save_students
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student [:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
 end
 
-def show_students
-  print_header
-  print_students_list
-  print_footer
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(",")
+      @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
 end
 
-def interactive_menu
-  loop do
-    print_menu
-    process(gets.chomp)
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
   end
 end
 
-def process(selection)
-  case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      save_students
-    when "4"
-      load_students
-    when "9"
-      exit
-    else
-      puts "I don't know what you meant, try again"
-  end
-end
-
+try_load_students
 interactive_menu
