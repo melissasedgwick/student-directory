@@ -1,10 +1,24 @@
 @students = []
+@possible_cohorts = ["January",
+"February",
+"March",
+"April",
+"May",
+"June",
+"July",
+"August",
+"September",
+"October",
+"November",
+"December"
+]
 
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
+  puts "5. Show the students, grouped by cohort"
   puts "9. Exit"
 end
 
@@ -18,14 +32,22 @@ end
 def process(selection)
   case selection
     when "1"
+      puts "You've selected to input students:"
       input_students
     when "2"
+      puts "You've selected to show students:"
       show_students
     when "3"
+      puts "You've saved the list of students"
       save_students
     when "4"
+      puts "You've loaded the list of students"
       load_students
+    when "5"
+      puts "Students grouped by cohort:"
+      print_by_cohort
     when "9"
+      puts "Program ended."
       exit
     else
       puts "I don't know what you meant, try again"
@@ -33,19 +55,6 @@ def process(selection)
 end
 
 def input_students
-  @possible_cohorts = ["January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-]
   puts "Please enter the name of the first student you'd like to enter"
   name = STDIN.gets.chomp
   while !name.empty? do
@@ -55,12 +64,6 @@ def input_students
       puts "Please enter a correct cohort."
       cohort = STDIN.gets.chomp.capitalize
     end
-  #  puts "What is #{name}'s hobby?"
-  #  hobby = STDIN.gets.chomp
-  #  puts "What is #{name}'s height (in metres)?"
-  #  height = STDIN.gets.chomp
-  #  puts "What is #{name}'s date of birth (in format DD/MM/YYYY)?"
-  #  dob = STDIN.gets.chomp
     add_to_students(name, cohort)
     if @students.count == 1
       puts "Now we have #{@students.count} student"
@@ -87,7 +90,6 @@ end
 def print_students_list
   @students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)".center(100)
-  #  puts "is #{student[:height]}m tall, was born #{student[:DOB]} and likes #{student[:hobby]}".center(100)
   end
 end
 
@@ -95,11 +97,12 @@ def print_by_cohort
   @possible_cohorts.each do |month|
     if @students.any? { |student| student[:cohort] == month.to_sym }
       puts "#{month}:".center(100)
-    end
-    @students.each do |student|
-      if student[:cohort] == month.to_sym
-        puts student[:name].center(100)
+      @students.each do |student|
+        if student[:cohort] == month.to_sym
+          puts student[:name].center(100)
+        end
       end
+      puts ""
     end
   end
 end
