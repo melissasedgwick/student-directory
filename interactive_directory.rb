@@ -21,6 +21,7 @@ def print_menu
   puts "3. Save the list to a file"
   puts "4. Load the list from a file"
   puts "5. Show the students, grouped by cohort"
+  puts "6. Show source code"
   puts "9. Exit"
 end
 
@@ -49,6 +50,8 @@ def process(selection)
     when "5"
       puts "Students grouped by cohort:"
       print_by_cohort
+    when "6"
+      show_own_source
     when "9"
       puts "Program ended."
       exit
@@ -151,6 +154,10 @@ end
 
 def add_to_students(name, cohort)
   @students << {name: name, cohort: cohort.to_sym}
+end
+
+def show_own_source
+  puts File.read(__FILE__)
 end
 
 try_load_students
