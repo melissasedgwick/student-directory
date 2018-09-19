@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = []
 @possible_cohorts = ["January",
 "February",
@@ -120,21 +122,16 @@ end
 def save_students
   puts "Save students to which file?"
   file_to_save_to = gets.chomp
-  File.open(file_to_save_to, "w") do |file|
+  CSV.open("students.csv", "wb") do |csv|
     @students.each do |student|
-      student_data = [student[:name], student [:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      csv << student.values
     end
   end
 end
 
 def load_students(filename = gets.chomp)
-  File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(",")
-      add_to_students(name, cohort)
-    end
+  CSV.foreach("students.csv") do |row|
+    add_to_students(row[0], row[1])
   end
 end
 
