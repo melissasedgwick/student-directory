@@ -119,23 +119,23 @@ end
 
 def save_students
   puts "Save students to which file?"
-    file_to_save_to = gets.chomp
-  file = File.open(file_to_save_to, "w")
-  @students.each do |student|
-    student_data = [student[:name], student [:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  file_to_save_to = gets.chomp
+  File.open(file_to_save_to, "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student [:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
 end
 
 def load_students(filename = gets.chomp)
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
+  File.open(filename, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(",")
       add_to_students(name, cohort)
+    end
   end
-  file.close
 end
 
 def try_load_students
